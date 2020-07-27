@@ -1,0 +1,14 @@
+# Mac meta file
+.DS_Store
+
+# WebStorm project meta
+.idea/
+
+# yarn & node modules
+yarn-error.log
+node_modules/
+
+# Compiled files
+*.js
+*.js.map
+!webpack.*.js
