@@ -50,7 +50,7 @@ const App = () => {
     ipcRenderer.send('open-youtube');
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     store.set('sitekey', sitekey);
     store.set('url', url);
