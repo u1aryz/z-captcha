@@ -67,7 +67,8 @@ ipcMain.on('start-recaptcha', (_: unknown, arg: { url: string; sitekey: string }
   });
 });
 
-ipcMain.on('solve-recaptcha', () => {
+ipcMain.on('solve-recaptcha', (_: unknown, arg: string) => {
+  console.log(arg);
   mainWindow?.webContents.session.setProxy(proxyConfig, () => mainWindow?.reload());
 });
 

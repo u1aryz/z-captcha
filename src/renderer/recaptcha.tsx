@@ -33,7 +33,9 @@ const App = () => {
   }, []);
 
   const onSolve = (value: string | null) => {
-    ipcRenderer.send('solve-recaptcha', value);
+    if (value) {
+      ipcRenderer.send('solve-recaptcha', value);
+    }
   };
 
   const onScriptLoad = async () => {
