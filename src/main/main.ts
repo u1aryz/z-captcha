@@ -2,6 +2,10 @@ import { app, BrowserWindow, Config, ipcMain } from 'electron';
 import * as http from 'http';
 import * as process from 'process';
 import * as express from 'express';
+import * as mysql from 'promise-mysql';
+import * as Store from 'electron-store';
+import CaptchaDao from './captchaDao';
+import { dbConfig } from './config';
 
 class Main {
   private mainWindow: BrowserWindow | null = null;
@@ -9,6 +13,12 @@ class Main {
   private youtubeWindow: BrowserWindow | null = null;
 
   private server: http.Server | null = null;
+
+  private pool: mysql.Pool | null = null;
+
+  private captchaDao: CaptchaDao | null = null;
+
+  private store = new Store();
 
   private static setProxy(win: BrowserWindow, config: Config): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -35,10 +45,13 @@ class Main {
   public async setup(): Promise<void> {
     app.commandLine.appendSwitch('disable-web-security');
     app.commandLine.appendSwitch('disable-site-isolation-trials');
+
     app.on('ready', async () => {
       await this.createMainWindow();
     });
-    app.on('window-all-closed', () => this.windowAllClosed());
+    app.on('window-all-closed', async () => {
+      await this.windowAllClosed();
+    });
     app.on('activate', async () => {
       await this.activeApp();
     });
@@ -58,13 +71,15 @@ class Main {
       res.sendFile('./recaptcha.html', {
         root: __dirname,
       });
-
       if (this.mainWindow) {
         await Main.disableProxy(this.mainWindow);
       }
     });
     expressApp.use('/static', express.static(__dirname));
     this.server = expressApp.listen('8200');
+
+    this.pool = await mysql.createPool(dbConfig);
+    this.captchaDao = new CaptchaDao(this.pool);
   }
 
   private async createMainWindow(): Promise<void> {
@@ -79,11 +94,12 @@ class Main {
     await this.mainWindow.loadURL('http://localhost:8200/static');
   }
 
-  private windowAllClosed(): void {
+  private async windowAllClosed(): Promise<void> {
     if (process.platform !== 'darwin') {
       app.quit();
     }
     this.server?.close();
+    await this.pool?.end();
   }
 
   private async activeApp(): Promise<void> {
@@ -100,7 +116,9 @@ class Main {
   }
 
   private async onSolveCaptcha(token: string): Promise<void> {
-    console.log(token);
+    const sitekey = this.store.get('sitekey', '') as string;
+    await this.captchaDao?.add(sitekey, token);
+
     if (this.mainWindow) {
       await Main.setProxyForCaptcha(this.mainWindow);
       this.mainWindow.reload();
