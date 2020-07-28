@@ -5,7 +5,7 @@ import * as process from 'process';
 const proxyConfig = {
   proxyRules: 'http://127.0.0.1:8200',
   pacScript: '',
-  proxyBypassRules: '.google.com, .gstatic.com, unpkg.com',
+  proxyBypassRules: '',
 };
 
 let mainWindow: BrowserWindow | null;
