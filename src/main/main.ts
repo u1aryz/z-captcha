@@ -29,7 +29,7 @@ expressApp.get('/', async (_, res) => {
   );
 });
 expressApp.use('/static', express.static(__dirname));
-expressApp.listen('8200');
+const server = expressApp.listen('8200');
 
 const createWindow = async () => {
   mainWindow = new BrowserWindow({
@@ -50,6 +50,7 @@ app.commandLine.appendSwitch('disable-site-isolation-trials');
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
+  server.close();
   if (process.platform !== 'darwin') {
     app.quit();
   }
