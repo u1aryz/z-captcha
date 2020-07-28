@@ -25,6 +25,16 @@ $ yarn
 $ yarn start
 ```
 
+When the container is started, the token is stored in the database.
+
+You can view the connection information [here](https://github.com/u1aryz/z-captcha/blob/master/src/main/config.ts).
+
+Required [Docker](https://www.docker.com/).
+
+```
+$ docker-compose up -d
+```
+
 ## License
 ```
 Copyright 2019 Yuichi Arai (@u1aryz)
