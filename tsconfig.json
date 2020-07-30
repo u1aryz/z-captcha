@@ -13,11 +13,5 @@
       "./node_modules/@types",
       "./@types"
     ]
-  },
-  "include": [
-    "src/renderer/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

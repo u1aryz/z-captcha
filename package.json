@@ -4,8 +4,8 @@
   "main": "dist/main.js",
   "scripts": {
     "clean": "rimraf dist/*.js",
-    "dev:main": "tsc -p tsconfig.main.json",
-    "dev:renderer": "webpack --config webpack/webpack.dev.js",
+    "dev:main": "webpack --config webpack/webpack.server.js",
+    "dev:renderer": "webpack --config webpack/webpack.renderer.dev.js",
     "dev": "run-p dev:*",
     "prestart": "run-s dev",
     "start": "electron ."
@@ -47,7 +47,8 @@
     "typescript": "^3.9.7",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.0.9"
+    "webpack-merge": "^5.0.9",
+    "webpack-node-externals": "^2.5.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",

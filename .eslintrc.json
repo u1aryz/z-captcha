@@ -62,7 +62,7 @@
     },
     "import/resolver": {
       "typescript": {
-        "directory": "./tsconfig.renderer.json"
+        "directory": "./tsconfig.json"
       }
     }
   }
