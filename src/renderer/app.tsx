@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ipcRenderer } from 'electron';
 import * as Store from 'electron-store';
+import { CssBaseline } from '@material-ui/core';
 
 const { useState, useEffect } = React;
 const store = new Store();
@@ -18,11 +19,6 @@ const theme = createMuiTheme({
   },
 });
 const useStyles = makeStyles(() => ({
-  '@global': {
-    body: {
-      margin: 0,
-    },
-  },
   content: {
     margin: '0 auto',
     maxWidth: 400,
@@ -59,33 +55,36 @@ const App = () => {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className={classes.content}>
-        <form onSubmit={onSubmit}>
-          <TextField
-            className={classes.mb2}
-            label="Sitekey"
-            value={sitekey}
-            onChange={(e) => setSitekey(e.target.value)}
-            fullWidth
-            required
-          />
-          <TextField
-            className={classes.mb4}
-            label="URL"
-            type="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            fullWidth
-            required
-          />
-          <Button className={classes.mb2} fullWidth variant="contained" color="primary" type="submit">
-            START reCAPTCHA
-          </Button>
-          <Button fullWidth variant="contained" onClick={openYouTube}>
-            OPEN YOUTUBE
-          </Button>
-        </form>
-      </div>
+      <>
+        <CssBaseline />
+        <div className={classes.content}>
+          <form onSubmit={onSubmit}>
+            <TextField
+              className={classes.mb2}
+              label="Sitekey"
+              value={sitekey}
+              onChange={(e) => setSitekey(e.target.value)}
+              fullWidth
+              required
+            />
+            <TextField
+              className={classes.mb4}
+              label="URL"
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              fullWidth
+              required
+            />
+            <Button className={classes.mb2} fullWidth variant="contained" color="primary" type="submit">
+              START reCAPTCHA
+            </Button>
+            <Button fullWidth variant="contained" onClick={openYouTube}>
+              OPEN YOUTUBE
+            </Button>
+          </form>
+        </div>
+      </>
     </MuiThemeProvider>
   );
 };
