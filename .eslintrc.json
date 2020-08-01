@@ -40,6 +40,12 @@
       }
     ],
     "react/jsx-filename-extension": "off",
+    "import/no-extraneous-dependencies": [
+      "error", {
+        "devDependencies": true,
+        "optionalDependencies": false
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
