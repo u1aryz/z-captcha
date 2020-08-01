@@ -7,6 +7,6 @@ declare module 'react-google-recaptcha' {
     asyncScriptOnLoad?: () => void;
   }
 
-  export default // noinspection JSDuplicatedDeclaration
-  class ReCAPTCHA extends React.Component<ReCAPTCHAProps> {}
+  // noinspection JSDuplicatedDeclaration
+  export default class ReCAPTCHA extends React.Component<ReCAPTCHAProps> {}
 }
