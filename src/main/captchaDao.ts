@@ -14,7 +14,7 @@ export default class CaptchaDao {
     const captcha: Captcha = {
       sitekey,
       token,
-      createdAt: new Date().toLocaleString(),
+      createdAt: new Date().toISOString().slice(0, 19).replace('T', ' '),
     };
 
     let conn: mysql.PoolConnection | undefined;
